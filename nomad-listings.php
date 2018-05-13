@@ -1,4 +1,5 @@
 <?php
+use moshthepitt\NomadListings;
 /**
  *
  * @link              http://jayanoris.com
@@ -18,6 +19,9 @@
  * Domain Path:       /languages
  */
 
+ // include composer packages
+require plugin_dir_path( __FILE__) . 'vendor/autoload.php';
+
 // If this file is called directly, abort.
 if (!defined( 'ABSPATH')) {
 	die;
@@ -26,6 +30,11 @@ if (!defined( 'ABSPATH')) {
 define('PLUGIN_NAME_VERSION', '0.0.1');
 define('BASE', 'nomad-listing');
 define('TAX_BASE', 'nomad-');
+define('PREFIX', 'nomad_');
+
+/**
+ * Register custom post types and taxonomies with WordPress
+ */
 
 // Our custom post type function
 function create_post_types() {
@@ -60,6 +69,7 @@ function create_post_types() {
     );
 }
 
+// Custom taxonomies
 function register_cat_tax() {
 	$labels = array(
 		'name' => __( 'Listing Categories', 'nomad_listing' ),
@@ -118,9 +128,7 @@ function register_tag_tax() {
 		)
 	);
 }
-/**
- * Registers custom tag taxonomy with WordPress
- */
+
 function register_location_tax() {
 	$labels = array(
 		'name' => __( 'Listing Locations', 'nomad_listing' ),
@@ -151,8 +159,75 @@ function register_location_tax() {
 }
 
 
-// Hooking up our function to register post types
+// Hooking up our functions to register post types and taxonomies
 add_action('init', 'create_post_types');
 add_action('init', 'register_cat_tax', 0);
 add_action('init', 'register_tag_tax', 0);
 add_action('init', 'register_location_tax', 0);
+
+/**
+ * Register custom meta input boxes
+ */
+add_filter('rwmb_meta_boxes', 'prefix_register_meta_boxes');
+function prefix_register_meta_boxes($meta_boxes) {
+    $prefix = PREFIX;
+    $meta_boxes[] = array(
+        'id'         => 'contact',
+        'title'      => 'Contact Information',
+        'post_types' => BASE,
+        'context'    => 'normal',
+        'priority'   => 'high',
+
+        'fields' => array(
+			array(
+                'name'  => __('Website', 'nomad_listings'),
+                'desc'  => __('Website URL', 'nomad_listings'),
+                'id'    => $prefix . 'website',
+                'type'  => 'url',
+			),
+			array(
+                'name'  => __('Email Address', 'nomad_listings'),
+                'desc'  => __('Email address', 'nomad_listings'),
+                'id'    => $prefix . 'email',
+                'type'  => 'text',
+			),
+			array(
+                'name'  	=> __('Phone Number', 'nomad_listings'),
+                'desc'  	=> __('Phone numbers', 'nomad_listings'),
+                'id'    	=> $prefix . 'phone_number',
+				'type'  	=> 'text_list',
+				'clone' 	=> true,
+				'options' 	=> array(
+					__('+254 xxx xxxxxx', 'nomad_listings') => __('Phone Number', 'nomad_listings'),
+				)
+			),
+			array(
+                'name'  => __('Facebook URL', 'nomad_listings'),
+                'desc'  => __('Tacebook Page URL', 'nomad_listings'),
+                'id'    => $prefix . 'facebook',
+                'type'  => 'url',
+			),
+			array(
+                'name'  => __('Twitter Handle', 'nomad_listings'),
+                'desc'  => __('Twitter handle', 'nomad_listings'),
+                'id'    => $prefix . 'twitter',
+                'type'  => 'text',
+			),
+			array(
+                'name'  => __('Instagram Handle', 'nomad_listings'),
+                'desc'  => __('Instagram handle', 'nomad_listings'),
+                'id'    => $prefix . 'instagram',
+                'type'  => 'text',
+			),
+		),
+
+		'validation' => array(
+			'rules' => array(
+				$prefix . 'email' => array(
+					'email' => true,
+				),
+			),
+		),
+    );
+    return $meta_boxes;
+}
