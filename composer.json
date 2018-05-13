@@ -1,0 +1,10 @@
+{
+    "autoload": {
+        "psr-4": {
+            "moshthepitt\\NomadListings\\": ["src/"]
+        }
+    },
+    "require": {
+        "rilwis/meta-box": "4.*"
+    }
+}

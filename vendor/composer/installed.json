@@ -1,0 +1,49 @@
+[
+    {
+        "name": "rilwis/meta-box",
+        "version": "4.14.5",
+        "version_normalized": "4.14.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/wpmetabox/meta-box.git",
+            "reference": "9dfd05459c596e60748144c72aa91010f95e259d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/wpmetabox/meta-box/zipball/9dfd05459c596e60748144c72aa91010f95e259d",
+            "reference": "9dfd05459c596e60748144c72aa91010f95e259d",
+            "shasum": ""
+        },
+        "time": "2018-04-05 10:35:52",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "meta-box.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0"
+        ],
+        "authors": [
+            {
+                "name": "Tran Ngoc Tuan Anh",
+                "email": "rilwis@gmail.com",
+                "homepage": "https://deluxeblogtips.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "A powerful, professional developer toolkit to create custom meta boxes and custom fields for WordPress websites.",
+        "homepage": "https://metabox.io",
+        "keywords": [
+            "custom-field",
+            "meta-box",
+            "select2",
+            "ui",
+            "wordpress",
+            "wordpress-plugin",
+            "wp-admin"
+        ]
+    }
+]
