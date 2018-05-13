@@ -175,7 +175,7 @@ function prefix_register_meta_boxes($meta_boxes) {
 	// amentities and special features
 	$meta_boxes[] = array(
         'id'         => 'listing_info',
-        'title'      => 'Listing Information',
+        'title'      => __('Listing Information', 'nomad_listings'),
         'post_types' => BASE,
         'context'    => 'normal',
         'priority'   => 'high',
@@ -207,7 +207,7 @@ function prefix_register_meta_boxes($meta_boxes) {
 	// contact information
     $meta_boxes[] = array(
         'id'         => 'contact',
-        'title'      => 'Contact Information',
+        'title'      => __('Contact Information', 'nomad_listings'),
         'post_types' => BASE,
         'context'    => 'normal',
         'priority'   => 'high',
@@ -262,6 +262,46 @@ function prefix_register_meta_boxes($meta_boxes) {
 				),
 			),
 		),
-    );
+	);
+
+	// Map
+	$meta_boxes[] = array(
+		'id'         => 'location',
+        'title'      => __('Location', 'nomad_listings'),
+        'post_types' => BASE,
+        'context'    => 'normal',
+		'priority'   => 'high',
+
+		'fields' => array(
+			// Map requires at least one address field (with type = text).
+			array(
+				'id'   => 'address',
+				'name' => __( 'Address', 'nomad_listings'),
+				'type' => 'text',
+				'std'  => __( 'Mombasa, Kenya', 'nomad_listings'),
+			),
+			array(
+				'id'            => 'map',
+				'name'          => __( 'Location', 'nomad_listings'),
+				'type'          => 'map',
+
+				// Your Google Maps API key. Required.
+				'api_key'       => 'AIzaSyBsluxqPpbTceWH3KnFCved2z-My_qBPxk',
+
+				// Address field ID. Can be a string or list of text fields, separated by commas (for ex. city, state).
+				'address_field' => 'address',
+
+				// Map language.
+				'language'      => 'en_GB',
+
+				// The region code, specified as a country code top-level domain. For better autocomplete address.
+				'region'        => 'KE',
+
+				// Default location: 'latitude,longitude[,zoom]' (zoom is optional).
+				'std'           => '-4.036878,39.669571,15',
+			),
+		),
+	);
+
     return $meta_boxes;
 }
