@@ -170,7 +170,41 @@ add_action('init', 'register_location_tax', 0);
  */
 add_filter('rwmb_meta_boxes', 'prefix_register_meta_boxes');
 function prefix_register_meta_boxes($meta_boxes) {
-    $prefix = PREFIX;
+	$prefix = PREFIX;
+
+	// amentities and special features
+	$meta_boxes[] = array(
+        'id'         => 'listing_info',
+        'title'      => 'Listing Information',
+        'post_types' => BASE,
+        'context'    => 'normal',
+        'priority'   => 'high',
+
+        'fields' => array(
+			array(
+                'name'  	=> __('Amentities', 'nomad_listings'),
+                'desc'  	=> __('Amenities', 'nomad_listings'),
+                'id'    	=> $prefix . 'amenities',
+				'type'  	=> 'text_list',
+				'clone' 	=> true,
+				'options' 	=> array(
+					__('swimming pool', 'nomad_listings') => __('Amenity', 'nomad_listings'),
+				)
+			),
+			array(
+                'name'  	=> __('Special Features', 'nomad_listings'),
+                'desc'  	=> __('Special Features', 'nomad_listings'),
+                'id'    	=> $prefix . 'special_features',
+				'type'  	=> 'text_list',
+				'clone' 	=> true,
+				'options' 	=> array(
+					__('hidden caves', 'nomad_listings') => __('Special Feature', 'nomad_listings'),
+				)
+			),
+		),
+    );
+
+	// contact information
     $meta_boxes[] = array(
         'id'         => 'contact',
         'title'      => 'Contact Information',
