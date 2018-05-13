@@ -1,12 +1,5 @@
 <?php
-
 /**
- * The plugin bootstrap file
- *
- * This file is read by WordPress to generate the plugin information in the plugin
- * admin area. This file also includes all of the dependencies used by the plugin,
- * registers the activation and deactivation functions, and defines a function
- * that starts the plugin.
  *
  * @link              http://jayanoris.com
  * @since             1.0.0
@@ -15,8 +8,8 @@
  * @wordpress-plugin
  * Plugin Name:       Nomad Listings
  * Plugin URI:        https://nomadmagazine.co/
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
- * Version:           1.0.0
+ * Description:       A listings plugin for Nomad Magazine
+ * Version:           0.0.1
  * Author:            Kelvin Jayanoris
  * Author URI:        http://jayanoris.com
  * License:           GPL-2.0+
@@ -26,57 +19,8 @@
  */
 
 // If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
+if (!defined( 'ABSPATH')) {
 	die;
 }
 
-/**
- * Currently plugin version.
- * Start at version 1.0.0 and use SemVer - https://semver.org
- * Rename this for your plugin and update it as you release new versions.
- */
-define( 'PLUGIN_NAME_VERSION', '1.0.0' );
-
-/**
- * The code that runs during plugin activation.
- * This action is documented in includes/class-nomad-listings-activator.php
- */
-function activate_nomad_listings() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-nomad-listings-activator.php';
-	Nomad_Listings_Activator::activate();
-}
-
-/**
- * The code that runs during plugin deactivation.
- * This action is documented in includes/class-nomad-listings-deactivator.php
- */
-function deactivate_nomad_listings() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-nomad-listings-deactivator.php';
-	Nomad_Listings_Deactivator::deactivate();
-}
-
-register_activation_hook( __FILE__, 'activate_nomad_listings' );
-register_deactivation_hook( __FILE__, 'deactivate_nomad_listings' );
-
-/**
- * The core plugin class that is used to define internationalization,
- * admin-specific hooks, and public-facing site hooks.
- */
-require plugin_dir_path( __FILE__ ) . 'includes/class-nomad-listings.php';
-
-/**
- * Begins execution of the plugin.
- *
- * Since everything within the plugin is registered via hooks,
- * then kicking off the plugin from this point in the file does
- * not affect the page life cycle.
- *
- * @since    1.0.0
- */
-function run_nomad_listings() {
-
-	$plugin = new Nomad_Listings();
-	$plugin->run();
-
-}
-run_nomad_listings();
+define( 'PLUGIN_NAME_VERSION', '0.0.1' );
