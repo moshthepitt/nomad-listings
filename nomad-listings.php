@@ -175,7 +175,7 @@ function prefix_register_meta_boxes($meta_boxes)
 {
     $prefix = PREFIX;
 
-    // amentities and special features
+    // amenities and special features
     $meta_boxes[] = array(
         'id' => 'listing_info',
         'title' => __('Listing Information', 'nomad_listings'),
@@ -185,7 +185,7 @@ function prefix_register_meta_boxes($meta_boxes)
 
         'fields' => array(
             array(
-                'name' => __('Amentities', 'nomad_listings'),
+                'name' => __('Amenities', 'nomad_listings'),
                 'desc' => __('Amenities', 'nomad_listings'),
                 'id' => $prefix . 'amenities',
                 'type' => 'text_list',
@@ -256,6 +256,12 @@ function prefix_register_meta_boxes($meta_boxes)
                 'id' => $prefix . 'instagram',
                 'type' => 'text',
             ),
+            array(
+                'name' => __('LinkedIn Profile', 'nomad_listings'),
+                'desc' => __('LinkedIn Profile URL', 'nomad_listings'),
+                'id' => $prefix . 'linkedin',
+                'type' => 'url',
+            ),
         ),
 
         'validation' => array(
@@ -263,6 +269,31 @@ function prefix_register_meta_boxes($meta_boxes)
                 $prefix . 'email' => array(
                     'email' => true,
                 ),
+            ),
+        ),
+    );
+
+    // Page settings
+    $meta_boxes[] = array(
+        'id' => 'page_settings',
+        'title' => __('Page Settings', 'nomad_listings'),
+        'post_types' => BASE,
+        'context' => 'normal',
+        'priority' => 'high',
+
+        'fields' => array(
+            array(
+                'name' => __('Page Layout', 'nomad_listings'),
+                'desc' => __('Select page layout', 'nomad_listings'),
+                'id' => $prefix . 'layout',
+                'type' => 'select',
+                'options' => array(
+                    'sidebar' => 'Sidebar',
+                    'Fullwidth' => 'Full Width',
+                ),
+                'multiple' => false,
+                'placeholder' => 'Select a page layout',
+                'select_all_none' => false,
             ),
         ),
     );
@@ -303,3 +334,16 @@ function prefix_register_meta_boxes($meta_boxes)
 
     return $meta_boxes;
 }
+
+// listings sidebar
+function nomad_custom_sidebar() {
+    if (function_exists('register_sidebar')) {
+        register_sidebar(
+            array(
+                'id' => 'single-nomad-listings-sidebar',
+                'name' => 'Single Nomad Listing Sidebar',
+                'description' => 'The default sidebar for single nomad listing')
+            );
+    }
+}
+add_action( 'widgets_init', 'nomad_custom_sidebar' );
