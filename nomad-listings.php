@@ -273,27 +273,78 @@ function prefix_register_meta_boxes($meta_boxes)
         ),
     );
 
-    // Page settings
+    // Additional Info
     $meta_boxes[] = array(
-        'id' => 'page_settings',
-        'title' => __('Page Settings', 'nomad_listings'),
+        'id' => 'additional_info',
+        'title' => __('Additional Information', 'nomad_listings'),
         'post_types' => BASE,
         'context' => 'normal',
         'priority' => 'high',
 
         'fields' => array(
             array(
-                'name' => __('Page Layout', 'nomad_listings'),
-                'desc' => __('Select page layout', 'nomad_listings'),
-                'id' => $prefix . 'layout',
-                'type' => 'select',
-                'options' => array(
-                    'sidebar' => 'Sidebar',
-                    'Fullwidth' => 'Full Width',
+                'name' => __('Number of rooms', 'nomad_listings'),
+                'id'   => $prefix . 'number_of_rooms',
+                'type' => 'number',
+                'min'  => 1,
+                'step' => 1,
+            ),
+            array(
+                'name'       => __('Checkin Time', 'nomad_listings'),
+                'id'         => $prefix . 'checkin_time',
+                'type'       => 'time',
+                // Time options, see here http://trentrichardson.com/examples/timepicker/
+                'js_options' => array(
+                    'stepMinute'      => 15,
+                    'controlType'     => 'select',
+                    'showButtonPanel' => false,
+                    'oneLine'         => true,
                 ),
-                'multiple' => false,
-                'placeholder' => 'Select a page layout',
+                // Display inline?
+                'inline'     => false,
+            ),
+            array(
+                'name'       => __('Checkout Time', 'nomad_listings'),
+                'id'         => $prefix . 'checkout_time',
+                'type'       => 'time',
+                // Time options, see here http://trentrichardson.com/examples/timepicker/
+                'js_options' => array(
+                    'stepMinute'      => 15,
+                    'controlType'     => 'select',
+                    'showButtonPanel' => false,
+                    'oneLine'         => true,
+                ),
+                // Display inline?
+                'inline'     => false,
+            ),
+            array(
+                'name'            => __('Pricing', 'nomad_listings'),
+                'id'              => $prefix . 'pricing',
+                'type'            => 'select',
+                // Array of 'value' => 'Label' pairs
+                'options'         => array(
+                    '$'       => '$',
+                    '$$' => '$$',
+                    '$$$'        => '$$$',
+                    '$$$$'     => '$$$$',
+                    '$$$$$' => '$$$$$',
+                ),
+                // Allow to select multiple value?
+                'multiple'        => false,
+                // Placeholder text
+                'placeholder'     => __('Select Pricing', 'nomad_listings'),
+                // Display "Select All / None" button?
                 'select_all_none' => false,
+            ),
+            array(
+                'name' => __('Nearby', 'nomad_listings'),
+                'desc' => __('Nearby attractions', 'nomad_listings'),
+                'id' => $prefix . 'nearby',
+                'type' => 'text_list',
+                'clone' => true,
+                'options' => array(
+                    __('Art gallery', 'nomad_listings') => __('', 'nomad_listings'),
+                ),
             ),
         ),
     );
@@ -336,14 +387,15 @@ function prefix_register_meta_boxes($meta_boxes)
 }
 
 // listings sidebar
-function nomad_custom_sidebar() {
+function nomad_custom_sidebar()
+{
     if (function_exists('register_sidebar')) {
         register_sidebar(
             array(
                 'id' => 'single-nomad-listings-sidebar',
                 'name' => 'Single Nomad Listing Sidebar',
                 'description' => 'The default sidebar for single nomad listing')
-            );
+        );
     }
 }
-add_action( 'widgets_init', 'nomad_custom_sidebar' );
+add_action('widgets_init', 'nomad_custom_sidebar');
