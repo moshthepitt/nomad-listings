@@ -161,11 +161,79 @@ function register_location_tax()
     );
 }
 
+function register_feature_tax()
+{
+    $labels = array(
+        'name' => __('Listing Features', 'nomad_listing'),
+        'singular_name' => __('Listing Feature', 'nomad_listing'),
+        'search_items' => __('Search Listing Features', 'nomad_listing'),
+        'all_items' => __('All Listing Features', 'nomad_listing'),
+        'parent_item' => __('Parent Listing Feature', 'nomad_listing'),
+        'parent_item_colon' => __('Parent Listing Features:', 'nomad_listing'),
+        'edit_item' => __('Edit Listing Feature', 'nomad_listing'),
+        'update_item' => __('Update Listing Feature', 'nomad_listing'),
+        'add_new_item' => __('Add New Listing Feature', 'nomad_listing'),
+        'new_item_name' => __('New Listing Feature Name', 'nomad_listing'),
+        'menu_name' => __('Listing Features', 'nomad_listing'),
+        'choose_from_most_used' => __('Choose from common features', 'nomad_listing'),
+    );
+
+    register_taxonomy(
+        TAX_BASE . 'listing-item-feature',
+        array(BASE),
+        array(
+            'hierarchical' => false,
+            'labels' => $labels,
+            'show_ui' => true,
+            'query_var' => true,
+            'sort' => true,
+            'args' => array('orderby' => 'term_order'),
+            'rewrite' => array('slug' => 'listing-item-feature',
+            ),
+        )
+    );
+}
+
+function register_amenity_tax()
+{
+    $labels = array(
+        'name' => __('Listing Amenities', 'nomad_listing'),
+        'singular_name' => __('Listing Amenity', 'nomad_listing'),
+        'search_items' => __('Search Listing Amenities', 'nomad_listing'),
+        'all_items' => __('All Listing Amenities', 'nomad_listing'),
+        'parent_item' => __('Parent Listing Amenity', 'nomad_listing'),
+        'parent_item_colon' => __('Parent Listing Amenities:', 'nomad_listing'),
+        'edit_item' => __('Edit Listing Amenity', 'nomad_listing'),
+        'update_item' => __('Update Listing Amenity', 'nomad_listing'),
+        'add_new_item' => __('Add New Listing Amenity', 'nomad_listing'),
+        'new_item_name' => __('New Listing Amenity Name', 'nomad_listing'),
+        'menu_name' => __('Listing Amenities', 'nomad_listing'),
+        'choose_from_most_used' => __('Choose from common amenities', 'nomad_listings'),
+    );
+
+    register_taxonomy(
+        TAX_BASE . 'listing-item-amenitiy',
+        array(BASE),
+        array(
+            'hierarchical' => false,
+            'labels' => $labels,
+            'show_ui' => true,
+            'query_var' => true,
+            'sort' => true,
+            'args' => array('orderby' => 'term_order'),
+            'rewrite' => array('slug' => 'listing-item-amenity',
+            ),
+        )
+    );
+}
+
 // Hooking up our functions to register post types and taxonomies
 add_action('init', 'create_post_types');
 add_action('init', 'register_cat_tax', 0);
 add_action('init', 'register_tag_tax', 0);
 add_action('init', 'register_location_tax', 0);
+add_action('init', 'register_feature_tax', 0);
+add_action('init', 'register_amenity_tax', 0);
 
 /**
  * Register custom meta input boxes
@@ -174,38 +242,6 @@ add_filter('rwmb_meta_boxes', 'prefix_register_meta_boxes');
 function prefix_register_meta_boxes($meta_boxes)
 {
     $prefix = PREFIX;
-
-    // amenities and special features
-    $meta_boxes[] = array(
-        'id' => 'listing_info',
-        'title' => __('Listing Information', 'nomad_listings'),
-        'post_types' => BASE,
-        'context' => 'normal',
-        'priority' => 'high',
-
-        'fields' => array(
-            array(
-                'name' => __('Amenities', 'nomad_listings'),
-                'desc' => __('Amenities', 'nomad_listings'),
-                'id' => $prefix . 'amenities',
-                'type' => 'text_list',
-                'clone' => true,
-                'options' => array(
-                    __('swimming pool', 'nomad_listings') => __('Amenity', 'nomad_listings'),
-                ),
-            ),
-            array(
-                'name' => __('Special Features', 'nomad_listings'),
-                'desc' => __('Special Features', 'nomad_listings'),
-                'id' => $prefix . 'special_features',
-                'type' => 'text_list',
-                'clone' => true,
-                'options' => array(
-                    __('hidden caves', 'nomad_listings') => __('Special Feature', 'nomad_listings'),
-                ),
-            ),
-        ),
-    );
 
     // contact information
     $meta_boxes[] = array(
