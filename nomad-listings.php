@@ -271,7 +271,7 @@ function prefix_register_meta_boxes($meta_boxes)
                 'type' => 'text_list',
                 'clone' => true,
                 'options' => array(
-                    __('+254 xxx xxxxxx', 'nomad_listings') => __('Phone Number', 'nomad_listings'),
+                    __('+254 xxx xxxxxx', 'nomad_listings') => __('', 'nomad_listings'),
                 ),
             ),
             array(
