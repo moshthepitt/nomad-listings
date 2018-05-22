@@ -1,9 +1,14 @@
 <?php
 /**
+ * Nomad Listings
  *
- * @link              http://jayanoris.com
- * @since             1.0.0
- * @package           Nomad_Listings
+ * Nomad Listings plugin.
+ *
+ * @category Plugin
+ * @package  Nomad_Listings
+ * @author   Kelvin Jayanoris <kelvin@jayanoris.com>
+ * @license  https://github.com/moshthepitt/nomad-listings/blob/master/LICENSE GPL-2.0+
+ * @link     https://github.com/moshthepitt/nomad-listings
  *
  * @wordpress-plugin
  * Plugin Name:       Nomad Listings
@@ -13,9 +18,7 @@
  * Author:            Kelvin Jayanoris
  * Author URI:        http://jayanoris.com
  * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       nomad-listings
- * Domain Path:       /languages
+ * License URI:       https://github.com/moshthepitt/nomad-listings/blob/master/LICENSE
  */
 
 // include composer packages
@@ -212,7 +215,7 @@ function register_amenity_tax()
     );
 
     register_taxonomy(
-        TAX_BASE . 'listing-item-amenitiy',
+        TAX_BASE . 'listing-item-amenity',
         array(BASE),
         array(
             'hierarchical' => false,
