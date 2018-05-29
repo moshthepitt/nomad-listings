@@ -329,7 +329,7 @@ function prefix_register_meta_boxes($meta_boxes)
                 'step' => 1,
             ),
             array(
-                'name'       => __('Checkin Time', 'nomad_listings'),
+                'name'       => __('Check In Time', 'nomad_listings'),
                 'id'         => $prefix . 'checkin_time',
                 'type'       => 'time',
                 // Time options, see here http://trentrichardson.com/examples/timepicker/
@@ -343,7 +343,7 @@ function prefix_register_meta_boxes($meta_boxes)
                 'inline'     => false,
             ),
             array(
-                'name'       => __('Checkout Time', 'nomad_listings'),
+                'name'       => __('Check Out Time', 'nomad_listings'),
                 'id'         => $prefix . 'checkout_time',
                 'type'       => 'time',
                 // Time options, see here http://trentrichardson.com/examples/timepicker/
@@ -384,6 +384,13 @@ function prefix_register_meta_boxes($meta_boxes)
                 'options' => array(
                     __('Art gallery', 'nomad_listings') => __('', 'nomad_listings'),
                 ),
+            ),
+            array(
+                'name' => __('Video', 'nomad_listings'),
+                'desc' => __('Video URL', 'nomad_listings'),
+                'id' => $prefix . 'video',
+                'type'  => 'oembed',
+                'size'  => 50,
             ),
         ),
     );
