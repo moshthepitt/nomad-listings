@@ -392,6 +392,28 @@ function prefix_register_meta_boxes($meta_boxes)
                 'type'  => 'oembed',
                 'size'  => 50,
             ),
+            array(
+                'name' => __('Awards', 'nomad_listings'),
+                'desc' => __('Awards', 'nomad_listings'),
+                'id' => $prefix . 'awards',
+                'type'  => 'wysiwyg',
+                'raw'  => false,
+                'options' => array(
+                    'textarea_rows' => 15,
+                    'teeny'         => false,
+                ),
+            ),
+            array(
+                'name' => __('Events & Offers', 'nomad_listings'),
+                'desc' => __('Events and offers', 'nomad_listings'),
+                'id' => $prefix . 'events_offers',
+                'type'  => 'wysiwyg',
+                'raw'  => false,
+                'options' => array(
+                    'textarea_rows' => 15,
+                    'teeny'         => false,
+                ),
+            ),
         ),
     );
 
