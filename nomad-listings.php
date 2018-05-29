@@ -253,7 +253,7 @@ function prefix_register_meta_boxes($meta_boxes)
 
     // contact information
     $meta_boxes[] = array(
-        'id' => 'contact',
+        'id' =>  $prefix . 'contact',
         'title' => __('Contact Information', 'nomad_listings'),
         'post_types' => BASE,
         'context' => 'normal',
@@ -328,7 +328,7 @@ function prefix_register_meta_boxes($meta_boxes)
 
     // Additional Info
     $meta_boxes[] = array(
-        'id' => 'additional_info',
+        'id' =>  $prefix . 'additional_info',
         'title' => __('Additional Information', 'nomad_listings'),
         'post_types' => BASE,
         'context' => 'normal',
@@ -433,7 +433,7 @@ function prefix_register_meta_boxes($meta_boxes)
 
     // Gallery
     $meta_boxes[] = array(
-        'id' => 'gallery',
+        'id' =>  $prefix . 'gallery',
         'title' => __('Gallery', 'nomad_listings'),
         'post_types' => BASE,
         'context' => 'normal',
@@ -451,9 +451,37 @@ function prefix_register_meta_boxes($meta_boxes)
         ),
     );
 
+    // Pricing
+    $meta_boxes[] = array(
+        'id' =>  $prefix . 'pricing',
+        'title' => __('Pricing', 'nomad_listings'),
+        'post_types' => BASE,
+        'context' => 'side',
+        'priority' => 'high',
+
+        'fields' => array(
+            array(
+                'name' => __('Price', 'nomad_listings'),
+                'desc' => __('Normal Price', 'nomad_listings'),
+                'id' => $prefix . 'price',
+                'type' => 'number',
+                'min'  => 0,
+                'step' => 1,
+            ),
+            array(
+                'name' => __('Discount Price', 'nomad_listings'),
+                'desc' => __('Discount Price', 'nomad_listings'),
+                'id' => $prefix . 'discount_price',
+                'type' => 'number',
+                'min'  => 0,
+                'step' => 1,
+            ),
+        ),
+    );
+
     // Map
     $meta_boxes[] = array(
-        'id' => 'location',
+        'id' =>  $prefix . 'location',
         'title' => __('Location', 'nomad_listings'),
         'post_types' => BASE,
         'context' => 'normal',
