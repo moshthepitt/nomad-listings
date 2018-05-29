@@ -245,6 +245,11 @@ add_filter('rwmb_meta_boxes', 'prefix_register_meta_boxes');
 function prefix_register_meta_boxes($meta_boxes)
 {
     $prefix = PREFIX;
+    if (is_plugin_active('contact-form-7/wp-contact-form-7.php')) {
+        $contact_form7_post_type = WPCF7_ContactForm::post_type;
+    } else {
+        $contact_form7_post_type = 'wpcf7_contact_form';
+    }
 
     // contact information
     $meta_boxes[] = array(
@@ -300,6 +305,15 @@ function prefix_register_meta_boxes($meta_boxes)
                 'desc' => __('LinkedIn Profile URL', 'nomad_listings'),
                 'id' => $prefix . 'linkedin',
                 'type' => 'url',
+            ),
+            array(
+                'name' => __('Booking Form', 'nomad_listings'),
+                'desc' => __('Select Booking Form (Needs Contact Form 7 plugin)', 'nomad_listings'),
+                'id' => $prefix . 'booking_form',
+                'type'        => 'post',
+                'post_type'   => $contact_form7_post_type,
+                'field_type'  => 'select_advanced',
+                'placeholder' => __('Select a form', 'nomad_listings'),
             ),
         ),
 
