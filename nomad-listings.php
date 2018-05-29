@@ -431,6 +431,26 @@ function prefix_register_meta_boxes($meta_boxes)
         ),
     );
 
+    // Gallery
+    $meta_boxes[] = array(
+        'id' => 'gallery',
+        'title' => __('Gallery', 'nomad_listings'),
+        'post_types' => BASE,
+        'context' => 'normal',
+        'priority' => 'high',
+
+        'fields' => array(
+            array(
+                'name' => __('Gallery', 'nomad_listings'),
+                'id' => $prefix . 'gallery',
+                'type'             => 'image_advanced',
+                'force_delete'     => false,
+                'max_status'       => 'false',
+                'image_size'       => 'thumbnail',
+            ),
+        ),
+    );
+
     // Map
     $meta_boxes[] = array(
         'id' => 'location',
