@@ -1,21 +1,24 @@
 <?php
 /**
+ * Nomad Listings
  *
- * @link              http://jayanoris.com
- * @since             1.0.0
- * @package           Nomad_Listings
+ * Nomad Listings plugin.
+ *
+ * @category Plugin
+ * @package  Nomad_Listings
+ * @author   Kelvin Jayanoris <kelvin@jayanoris.com>
+ * @license  https://github.com/moshthepitt/nomad-listings/blob/master/LICENSE GPL-2.0+
+ * @link     https://github.com/moshthepitt/nomad-listings
  *
  * @wordpress-plugin
  * Plugin Name:       Nomad Listings
  * Plugin URI:        https://nomadmagazine.co/
  * Description:       A listings plugin for Nomad Magazine
- * Version:           0.0.1
+ * Version:           0.0.2
  * Author:            Kelvin Jayanoris
  * Author URI:        http://jayanoris.com
  * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       nomad-listings
- * Domain Path:       /languages
+ * License URI:       https://github.com/moshthepitt/nomad-listings/blob/master/LICENSE
  */
 
 // include composer packages
@@ -161,11 +164,79 @@ function register_location_tax()
     );
 }
 
+function register_feature_tax()
+{
+    $labels = array(
+        'name' => __('Listing Features', 'nomad_listing'),
+        'singular_name' => __('Listing Feature', 'nomad_listing'),
+        'search_items' => __('Search Listing Features', 'nomad_listing'),
+        'all_items' => __('All Listing Features', 'nomad_listing'),
+        'parent_item' => __('Parent Listing Feature', 'nomad_listing'),
+        'parent_item_colon' => __('Parent Listing Features:', 'nomad_listing'),
+        'edit_item' => __('Edit Listing Feature', 'nomad_listing'),
+        'update_item' => __('Update Listing Feature', 'nomad_listing'),
+        'add_new_item' => __('Add New Listing Feature', 'nomad_listing'),
+        'new_item_name' => __('New Listing Feature Name', 'nomad_listing'),
+        'menu_name' => __('Listing Features', 'nomad_listing'),
+        'choose_from_most_used' => __('Choose from common features', 'nomad_listing'),
+    );
+
+    register_taxonomy(
+        TAX_BASE . 'listing-item-feature',
+        array(BASE),
+        array(
+            'hierarchical' => false,
+            'labels' => $labels,
+            'show_ui' => true,
+            'query_var' => true,
+            'sort' => true,
+            'args' => array('orderby' => 'term_order'),
+            'rewrite' => array('slug' => 'listing-item-feature',
+            ),
+        )
+    );
+}
+
+function register_amenity_tax()
+{
+    $labels = array(
+        'name' => __('Listing Amenities', 'nomad_listing'),
+        'singular_name' => __('Listing Amenity', 'nomad_listing'),
+        'search_items' => __('Search Listing Amenities', 'nomad_listing'),
+        'all_items' => __('All Listing Amenities', 'nomad_listing'),
+        'parent_item' => __('Parent Listing Amenity', 'nomad_listing'),
+        'parent_item_colon' => __('Parent Listing Amenities:', 'nomad_listing'),
+        'edit_item' => __('Edit Listing Amenity', 'nomad_listing'),
+        'update_item' => __('Update Listing Amenity', 'nomad_listing'),
+        'add_new_item' => __('Add New Listing Amenity', 'nomad_listing'),
+        'new_item_name' => __('New Listing Amenity Name', 'nomad_listing'),
+        'menu_name' => __('Listing Amenities', 'nomad_listing'),
+        'choose_from_most_used' => __('Choose from common amenities', 'nomad_listings'),
+    );
+
+    register_taxonomy(
+        TAX_BASE . 'listing-item-amenity',
+        array(BASE),
+        array(
+            'hierarchical' => false,
+            'labels' => $labels,
+            'show_ui' => true,
+            'query_var' => true,
+            'sort' => true,
+            'args' => array('orderby' => 'term_order'),
+            'rewrite' => array('slug' => 'listing-item-amenity',
+            ),
+        )
+    );
+}
+
 // Hooking up our functions to register post types and taxonomies
 add_action('init', 'create_post_types');
 add_action('init', 'register_cat_tax', 0);
 add_action('init', 'register_tag_tax', 0);
 add_action('init', 'register_location_tax', 0);
+add_action('init', 'register_feature_tax', 0);
+add_action('init', 'register_amenity_tax', 0);
 
 /**
  * Register custom meta input boxes
@@ -174,42 +245,15 @@ add_filter('rwmb_meta_boxes', 'prefix_register_meta_boxes');
 function prefix_register_meta_boxes($meta_boxes)
 {
     $prefix = PREFIX;
-
-    // amentities and special features
-    $meta_boxes[] = array(
-        'id' => 'listing_info',
-        'title' => __('Listing Information', 'nomad_listings'),
-        'post_types' => BASE,
-        'context' => 'normal',
-        'priority' => 'high',
-
-        'fields' => array(
-            array(
-                'name' => __('Amentities', 'nomad_listings'),
-                'desc' => __('Amenities', 'nomad_listings'),
-                'id' => $prefix . 'amenities',
-                'type' => 'text_list',
-                'clone' => true,
-                'options' => array(
-                    __('swimming pool', 'nomad_listings') => __('Amenity', 'nomad_listings'),
-                ),
-            ),
-            array(
-                'name' => __('Special Features', 'nomad_listings'),
-                'desc' => __('Special Features', 'nomad_listings'),
-                'id' => $prefix . 'special_features',
-                'type' => 'text_list',
-                'clone' => true,
-                'options' => array(
-                    __('hidden caves', 'nomad_listings') => __('Special Feature', 'nomad_listings'),
-                ),
-            ),
-        ),
-    );
+    if (is_plugin_active('contact-form-7/wp-contact-form-7.php')) {
+        $contact_form7_post_type = WPCF7_ContactForm::post_type;
+    } else {
+        $contact_form7_post_type = 'wpcf7_contact_form';
+    }
 
     // contact information
     $meta_boxes[] = array(
-        'id' => 'contact',
+        'id' =>  $prefix . 'contact',
         'title' => __('Contact Information', 'nomad_listings'),
         'post_types' => BASE,
         'context' => 'normal',
@@ -235,7 +279,7 @@ function prefix_register_meta_boxes($meta_boxes)
                 'type' => 'text_list',
                 'clone' => true,
                 'options' => array(
-                    __('+254 xxx xxxxxx', 'nomad_listings') => __('Phone Number', 'nomad_listings'),
+                    __('+254 xxx xxxxxx', 'nomad_listings') => __('', 'nomad_listings'),
                 ),
             ),
             array(
@@ -256,6 +300,21 @@ function prefix_register_meta_boxes($meta_boxes)
                 'id' => $prefix . 'instagram',
                 'type' => 'text',
             ),
+            array(
+                'name' => __('LinkedIn Profile', 'nomad_listings'),
+                'desc' => __('LinkedIn Profile URL', 'nomad_listings'),
+                'id' => $prefix . 'linkedin',
+                'type' => 'url',
+            ),
+            array(
+                'name' => __('Booking Form', 'nomad_listings'),
+                'desc' => __('Select Booking Form (Needs Contact Form 7 plugin)', 'nomad_listings'),
+                'id' => $prefix . 'booking_form',
+                'type'        => 'post',
+                'post_type'   => $contact_form7_post_type,
+                'field_type'  => 'select_advanced',
+                'placeholder' => __('Select a form', 'nomad_listings'),
+            ),
         ),
 
         'validation' => array(
@@ -267,9 +326,162 @@ function prefix_register_meta_boxes($meta_boxes)
         ),
     );
 
+    // Additional Info
+    $meta_boxes[] = array(
+        'id' =>  $prefix . 'additional_info',
+        'title' => __('Additional Information', 'nomad_listings'),
+        'post_types' => BASE,
+        'context' => 'normal',
+        'priority' => 'high',
+
+        'fields' => array(
+            array(
+                'name' => __('Number of rooms', 'nomad_listings'),
+                'id'   => $prefix . 'number_of_rooms',
+                'type' => 'number',
+                'min'  => 1,
+                'step' => 1,
+            ),
+            array(
+                'name'       => __('Check In Time', 'nomad_listings'),
+                'id'         => $prefix . 'checkin_time',
+                'type'       => 'time',
+                // Time options, see here http://trentrichardson.com/examples/timepicker/
+                'js_options' => array(
+                    'stepMinute'      => 15,
+                    'controlType'     => 'select',
+                    'showButtonPanel' => false,
+                    'oneLine'         => true,
+                ),
+                // Display inline?
+                'inline'     => false,
+            ),
+            array(
+                'name'       => __('Check Out Time', 'nomad_listings'),
+                'id'         => $prefix . 'checkout_time',
+                'type'       => 'time',
+                // Time options, see here http://trentrichardson.com/examples/timepicker/
+                'js_options' => array(
+                    'stepMinute'      => 15,
+                    'controlType'     => 'select',
+                    'showButtonPanel' => false,
+                    'oneLine'         => true,
+                ),
+                // Display inline?
+                'inline'     => false,
+            ),
+            array(
+                'name'            => __('Pricing', 'nomad_listings'),
+                'id'              => $prefix . 'pricing',
+                'type'            => 'select',
+                // Array of 'value' => 'Label' pairs
+                'options'         => array(
+                    '$'       => '$',
+                    '$$' => '$$',
+                    '$$$'        => '$$$',
+                    '$$$$'     => '$$$$',
+                    '$$$$$' => '$$$$$',
+                ),
+                // Allow to select multiple value?
+                'multiple'        => false,
+                // Placeholder text
+                'placeholder'     => __('Select Pricing', 'nomad_listings'),
+                // Display "Select All / None" button?
+                'select_all_none' => false,
+            ),
+            array(
+                'name' => __('Nearby', 'nomad_listings'),
+                'desc' => __('Nearby attractions', 'nomad_listings'),
+                'id' => $prefix . 'nearby',
+                'type' => 'text_list',
+                'clone' => true,
+                'options' => array(
+                    __('Art gallery', 'nomad_listings') => __('', 'nomad_listings'),
+                ),
+            ),
+            array(
+                'name' => __('Video', 'nomad_listings'),
+                'desc' => __('Video URL', 'nomad_listings'),
+                'id' => $prefix . 'video',
+                'type'  => 'oembed',
+                'size'  => 50,
+            ),
+            array(
+                'name' => __('Awards', 'nomad_listings'),
+                'desc' => __('Awards', 'nomad_listings'),
+                'id' => $prefix . 'awards',
+                'type'  => 'wysiwyg',
+                'raw'  => false,
+                'options' => array(
+                    'textarea_rows' => 15,
+                    'teeny'         => false,
+                ),
+            ),
+            array(
+                'name' => __('Events & Offers', 'nomad_listings'),
+                'desc' => __('Events and offers', 'nomad_listings'),
+                'id' => $prefix . 'events_offers',
+                'type'  => 'wysiwyg',
+                'raw'  => false,
+                'options' => array(
+                    'textarea_rows' => 15,
+                    'teeny'         => false,
+                ),
+            ),
+        ),
+    );
+
+    // Gallery
+    $meta_boxes[] = array(
+        'id' =>  $prefix . 'gallery',
+        'title' => __('Gallery', 'nomad_listings'),
+        'post_types' => BASE,
+        'context' => 'normal',
+        'priority' => 'high',
+
+        'fields' => array(
+            array(
+                'name' => __('Gallery', 'nomad_listings'),
+                'id' => $prefix . 'gallery',
+                'type'             => 'image_advanced',
+                'force_delete'     => false,
+                'max_status'       => 'false',
+                'image_size'       => 'thumbnail',
+            ),
+        ),
+    );
+
+    // Pricing
+    $meta_boxes[] = array(
+        'id' =>  $prefix . 'pricing',
+        'title' => __('Pricing', 'nomad_listings'),
+        'post_types' => BASE,
+        'context' => 'side',
+        'priority' => 'high',
+
+        'fields' => array(
+            array(
+                'name' => __('Price', 'nomad_listings'),
+                'desc' => __('Normal Price', 'nomad_listings'),
+                'id' => $prefix . 'price',
+                'type' => 'number',
+                'min'  => 0,
+                'step' => 1,
+            ),
+            array(
+                'name' => __('Discount Price', 'nomad_listings'),
+                'desc' => __('Discount Price', 'nomad_listings'),
+                'id' => $prefix . 'discount_price',
+                'type' => 'number',
+                'min'  => 0,
+                'step' => 1,
+            ),
+        ),
+    );
+
     // Map
     $meta_boxes[] = array(
-        'id' => 'location',
+        'id' =>  $prefix . 'location',
         'title' => __('Location', 'nomad_listings'),
         'post_types' => BASE,
         'context' => 'normal',
@@ -303,3 +515,17 @@ function prefix_register_meta_boxes($meta_boxes)
 
     return $meta_boxes;
 }
+
+// listings sidebar
+function nomad_custom_sidebar()
+{
+    if (function_exists('register_sidebar')) {
+        register_sidebar(
+            array(
+                'id' => 'single-nomad-listings-sidebar',
+                'name' => 'Single Nomad Listing Sidebar',
+                'description' => 'The default sidebar for single nomad listing')
+        );
+    }
+}
+add_action('widgets_init', 'nomad_custom_sidebar');
