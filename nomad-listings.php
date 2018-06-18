@@ -404,7 +404,7 @@ function prefix_register_meta_boxes($meta_boxes)
                 'desc' => __('Video URL', 'nomad_listings'),
                 'id' => $prefix . 'video',
                 'type'  => 'oembed',
-                'size'  => 50,
+                'size'  => 50
             ),
             array(
                 'name' => __('Awards', 'nomad_listings'),
@@ -490,13 +490,13 @@ function prefix_register_meta_boxes($meta_boxes)
         'fields' => array(
             // Map requires at least one address field (with type = text).
             array(
-                'id' => 'address',
+                'id' => $prefix . 'address',
                 'name' => __('Address', 'nomad_listings'),
                 'type' => 'text',
                 'std' => __('Mombasa, Kenya', 'nomad_listings'),
             ),
             array(
-                'id' => 'map',
+                'id' => $prefix . 'map',
                 'name' => __('Location', 'nomad_listings'),
                 'type' => 'map',
                 // Your Google Maps API key. Required.
