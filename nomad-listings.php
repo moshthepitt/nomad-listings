@@ -14,7 +14,7 @@
  * Plugin Name:       Nomad Listings
  * Plugin URI:        https://nomadmagazine.co/
  * Description:       A listings plugin for Nomad Magazine
- * Version:           0.0.2
+ * Version:           0.0.3
  * Author:            Kelvin Jayanoris
  * Author URI:        http://jayanoris.com
  * License:           GPL-2.0+
