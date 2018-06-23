@@ -1,20 +1,20 @@
 [
     {
         "name": "rilwis/meta-box",
-        "version": "4.14.9",
-        "version_normalized": "4.14.9.0",
+        "version": "4.19.10",
+        "version_normalized": "4.19.10.0",
         "source": {
             "type": "git",
             "url": "https://github.com/wpmetabox/meta-box.git",
-            "reference": "2e7daf5dc30496b9dd3293dbdfa30f611bc362f5"
+            "reference": "9ff43e4eed81a112a0473c2ad3c4d08847573e03"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/wpmetabox/meta-box/zipball/2e7daf5dc30496b9dd3293dbdfa30f611bc362f5",
-            "reference": "2e7daf5dc30496b9dd3293dbdfa30f611bc362f5",
+            "url": "https://api.github.com/repos/wpmetabox/meta-box/zipball/9ff43e4eed81a112a0473c2ad3c4d08847573e03",
+            "reference": "9ff43e4eed81a112a0473c2ad3c4d08847573e03",
             "shasum": ""
         },
-        "time": "2018-05-17 06:17:10",
+        "time": "2018-06-05 04:34:05",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
