@@ -513,6 +513,25 @@ function prefix_register_meta_boxes($meta_boxes)
         ),
     );
 
+    // Taxonomies
+    $meta_boxes[] = array(
+        'id' =>  $prefix . TAX_BASE . 'amenities',
+        'title' => __('Custom Fields', 'nomad_listings'),
+        'taxonomies' => array(
+            TAX_BASE . 'listing-item-amenity'
+        ),
+        'context' => 'normal',
+        'priority' => 'high',
+        'fields' => array(
+            array(
+                'name' => __('Image', 'nomad_listings'),
+                'id'   => $prefix . TAX_BASE . 'listing-item-amenity',
+                'type' => 'image_advanced',
+                'max_file_uploads' => 1,
+            ),
+        ),
+    );
+
     return $meta_boxes;
 }
 
