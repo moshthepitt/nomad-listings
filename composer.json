@@ -2,9 +2,25 @@
     "autoload": {
         "psr-4": {
             "moshthepitt\\NomadListings\\": ["src/"]
-        }
+        },
+        "files": [
+            "wp-content/plugins/mb-term-meta/mb-term-meta.php"
+        ]
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/moshthepitt/mb-term-meta"
+        }
+    ],
     "require": {
-        "rilwis/meta-box": "4.*"
+        "rilwis/meta-box": "4.*",
+        "plasticmind/mb-term-meta": "dev-master",
+        "composer/installers": "^1.5"
+    },
+    "extra": {
+        "installer-paths": {
+          "wp-content/plugins/mb-term-meta/": ["plasticmind/mb-term-meta"]
+        }
     }
 }
