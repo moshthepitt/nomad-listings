@@ -29,7 +29,7 @@ if (!defined('ABSPATH')) {
     die;
 }
 
-define('PLUGIN_NAME_VERSION', '0.0.1');
+define('PLUGIN_NAME_VERSION', '0.0.5');
 define('BASE', 'nomad-listing');
 define('TAX_BASE', 'nomad-');
 define('PREFIX', 'nomad_');
