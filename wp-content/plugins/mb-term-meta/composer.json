@@ -1,0 +1,14 @@
+{
+    "name": "plasticmind/mb-term-meta",
+    "description": "Add custom fields (meta data) for terms.",
+    "type": "wordpress-plugin",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "composer/installers": "^1.0"
+    },
+    "license": "GPL-2.0+",
+    "authors": [{
+        "name": "MetaBox.io"
+    }]
+}
