@@ -500,9 +500,9 @@ function prefix_register_meta_boxes($meta_boxes)
                 'name' => __('Location', 'nomad_listings'),
                 'type' => 'map',
                 // Your Google Maps API key. Required.
-                'api_key' => 'AIzaSyBsluxqPpbTceWH3KnFCved2z-My_qBPxk',
+                'api_key' => 'AIzaSyD3xOstHFS1BaJgfwVBc1IBhRRqZ7nj5Z8',
                 // Address field ID. Can be a string or list of text fields, separated by commas (for ex. city, state).
-                'address_field' => 'address',
+                'address_field' => $prefix . 'address',
                 // Map language.
                 'language' => 'en_GB',
                 // The region code, specified as a country code top-level domain. For better autocomplete address.
